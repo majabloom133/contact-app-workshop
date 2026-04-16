@@ -25,7 +25,7 @@ public class FileContactDAOImpl implements ContactDAO {
                 Files.createFile(filePath);
             } catch (IOException e) {
                 // Wrap standard IOException in custom exception
-                throw new ContactStorageException("Critical error: Couldn't initialize storage file!", e);
+                throw new ContactStorageException("Critical error: Couldn't initialize storage file!");
             }
         }
     }
@@ -43,7 +43,7 @@ public class FileContactDAOImpl implements ContactDAO {
             writer.write(contact.getName() + "," + contact.getPhoneNumber());
             writer.newLine();
         } catch (IOException e) {
-            throw new ContactStorageException("Failed to write to file!", e);
+            throw new ContactStorageException("Failed to write to file!");
         }
     }
 
@@ -62,7 +62,7 @@ public class FileContactDAOImpl implements ContactDAO {
                 }
             }
         } catch (IOException e) {
-            throw new ContactStorageException("Error reading data from file!", e);
+            throw new ContactStorageException("Error reading data from file!");
         }
         return contacts;
     }

@@ -21,19 +21,22 @@ public class ContactController {
         boolean running = true;
         while (running) {
             try {
-                ContactView.displayMenu();
+
+
+                contactView.displayMenu();
+
                 String choice = contactView.getUserInput("Choice an option");
 
 
                 switch (choice) {
                     case "1":
-                        List<Contact> contacts = contactDAO.findAll();
+                        createContact();
                         break;
                     case "2":
-                        List<Contact> contacts1 = contactDAO.save(contacts);
+                        ListContacts();
                         break;
                     case "3":
-                        List<Contact> contacts2 = contactDAO.findByName(name);
+                        findContact();
                         break;
                     case "0":
                         running = false;
@@ -49,23 +52,23 @@ public class ContactController {
         }
     }
 
-    private void ListContacts() throws ContactStorageExeption {
+    private void ListContacts() throws Exception {
         List<Contact> contacts = contactDAO.findAll();
         contactView.displayContacts(contacts);
     }
 
-    private void createContact(Contact contact) throws ContactStorageExeption {
+    private void createContact() throws Exception {
         String name = contactView.getUserInput("Enter Name:");
         String phone = contactView.getUserInput("Enter Phone Number:");
 
         Contact newContact = new Contact(name, phone);
         contactDAO.save(newContact);
 
-        ContactView.displayMessage("Contact saved!");
+        contactView.displayMessage("Contact saved!");
 
     }
 
-    private void findContact() throws ContactStorageExeption {
+    private void findContact() throws Exception {
         String name = contactView.getUserInput("Enter Name:");
         Contact contact = contactDAO.findByName(name);
 
