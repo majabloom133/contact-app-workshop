@@ -7,3 +7,7 @@ the controller and the view. The model, which contains information or represents
 The controller, which manages the inputs from the user, access the information in the model and send
 the data to the view. The view, which presents the interface and the menu of the application.
 It also displays the information that the view receives from the controller so that the user can see it.
+
+The classes in our workshop are connected through Dependency Injection, where we send in the ContactDAO
+and the ContactView to the ContactController at the start. This way, the Controller can manage the
+program without needing to know the details of how data is saved or how the UI is shown to the user.
