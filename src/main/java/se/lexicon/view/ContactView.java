@@ -9,7 +9,7 @@ public class ContactView {
 
     private final Scanner scanner = new Scanner(System.in);
 
-    public void displayMenu() {
+    public static void displayMenu() {
         System.out.println("\n--- Contact App ---");
         System.out.println("1. Add Contact");
         System.out.println("2. View All Contacts");

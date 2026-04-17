@@ -1,6 +1,7 @@
 package se.lexicon.controller;
 
 import se.lexicon.data.ContactDAO;
+import se.lexicon.exception.ExceptionHandler;
 import se.lexicon.model.Contact;
 import se.lexicon.view.ContactView;
 
@@ -27,52 +28,52 @@ public class ContactController {
 
                 switch (choice) {
                     case "1":
-                        List<Contact> contacts = contactDAO.findAll();
+                        addContact();
                         break;
                     case "2":
-                        List<Contact> contacts1 = contactDAO.save(contacts);
+                        viewAllContacts();
                         break;
                     case "3":
-                        List<Contact> contacts2 = contactDAO.findByName(name);
+                        searchContact();
                         break;
-                    case "0":
+                    case "4":
                         running = false;
                         break;
                     default:
-                        contactView.displayError("invalid choice");
+                        contactView.displayError("Invalid choice!");
                 }
 
 
             } catch (Exception e) {
-                throw new RuntimeException(e);
+                String message = ExceptionHandler.handle(e);
+                contactView.displayError(message);
             }
         }
     }
 
-    private void ListContacts() throws ContactStorageExeption {
+    private void addContact() throws Exception {
+        String name = contactView.getUserInput("Enter name: ");
+        String phone = contactView.getUserInput("Enter phone: ");
+
+        Contact contact = new Contact(name, phone);
+        contactDAO.save(contact);
+
+        contactView.displayMessage("Contact added successfully!");
+    }
+
+    private void viewAllContacts() throws Exception {
         List<Contact> contacts = contactDAO.findAll();
         contactView.displayContacts(contacts);
     }
 
-    private void createContact(Contact contact) throws ContactStorageExeption {
-        String name = contactView.getUserInput("Enter Name:");
-        String phone = contactView.getUserInput("Enter Phone Number:");
-
-        Contact newContact = new Contact(name, phone);
-        contactDAO.save(newContact);
-
-        ContactView.displayMessage("Contact saved!");
-
-    }
-
-    private void findContact() throws ContactStorageExeption {
-        String name = contactView.getUserInput("Enter Name:");
+    private void searchContact() throws Exception {
+        String name = contactView.getUserInput("Enter name to search: ");
         Contact contact = contactDAO.findByName(name);
 
         if (contact != null) {
-            contactView.displayMessage("Contact found!" + contact.getName() + "-" + contact.getPhoneNumber());
+            contactView.displayMessage(contact.toString());
         } else {
-            contactView.displayMessage("Contact not found!");
+            contactView.displayError("Contact not found");
         }
     }
 

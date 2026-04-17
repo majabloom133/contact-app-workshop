@@ -1,7 +1,5 @@
 package se.lexicon;
 
-
-
 import se.lexicon.controller.ContactController;
 import se.lexicon.data.ContactDAO;
 import se.lexicon.data.FileContactDAOImpl;
